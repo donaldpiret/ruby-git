@@ -500,6 +500,7 @@ module Git
     def checkout(branch, opts = {})
       arr_opts = []
       arr_opts << '-f' if opts[:force]
+      arr_opts << '-q' if opts[:quiet]
       arr_opts << '-b' << opts[:new_branch] if opts[:new_branch]
       arr_opts << branch
       
@@ -583,7 +584,13 @@ module Git
       command('push', ['--tags'] + arr_opts) if opts[:tags]
     end
 
-    def pull(remote='origin', branch='master')
+    def pull(remote='origin', branch='master', opts = {})
+
+      arr_opts = []
+      arr_opts << '-q' if opts[:quiet] || opts[:q]
+      arr_opts << '-ff' if opts[:ff]
+      arr_opts << '--no-ff' if opts[:no_ff]
+      arr_opts << '--ff-only' if opts[:ff_only]
       command('pull', [remote, branch])
     end
 

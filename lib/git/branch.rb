@@ -23,7 +23,7 @@ module Git
       @stashes ||= Git::Stashes.new(@base)
     end
     
-    def checkout
+    def checkout(opts = {})
       check_if_create
       @base.checkout(@full)
     end
